@@ -322,9 +322,6 @@ def sanitize_alignment(alignment: List[dict]) -> None:
             note["performance_id"] = str(perf_id)
 
 
-
-
-
 def dummy_linear_alignment(X: np.ndarray, Y: np.ndarray) -> np.ndarray:
     """
     A Dummy linear alignment
