@@ -18,6 +18,18 @@ conda env create -f environment.yml
 
 ## Running the tutorial
 
+### Colab
+
+You can run the tutorial directly on Google Colab, without the need to setup the code:
+
+* Symbolic Music Alignment: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/neosatrapahereje/music_alignment_tutorial/blob/main/Symbolic_Music_Alignment.ipynb)
+
+* DTW tutorial: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/neosatrapahereje/music_alignment_tutorial/blob/main/DTW_tutorial.ipynb)
+
+
+
+
+### Locally
 You can run the tutorial locally using the following code
 
 ```bash
