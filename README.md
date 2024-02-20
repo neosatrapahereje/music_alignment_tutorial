@@ -48,6 +48,6 @@ jupyter notebook DTW_tutorial.ipynb
 
 ## License
 
-The code is provided under the MIT license (see [LICENCE](https://github.com/neosatrapahereje/music_alignment_tutorial/blob/main/LICENSE)).
+The code is provided under the MIT license (see [LICENSE](https://github.com/neosatrapahereje/music_alignment_tutorial/blob/main/LICENSE)).
 
 
