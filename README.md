@@ -28,10 +28,8 @@ You can run the tutorial directly on Google Colab, without the need to setup the
 
 * DTW tutorial: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/neosatrapahereje/music_alignment_tutorial/blob/main/DTW_tutorial.ipynb)
 
-
-
-
 ### Locally
+
 You can run the tutorial locally using the following code
 
 ```bash
@@ -51,5 +49,3 @@ jupyter notebook DTW_tutorial.ipynb
 ## License
 
 The code is provided under the MIT license (see [LICENSE](https://github.com/neosatrapahereje/music_alignment_tutorial/blob/main/LICENSE)).
-
-
