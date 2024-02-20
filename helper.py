@@ -3,6 +3,7 @@
 """
 Helper methods for plotting and visualizing alignments
 """
+import glob
 import os
 from shutil import make_archive
 from typing import List, Optional, Tuple, Union
@@ -396,3 +397,88 @@ def compute_tempo_curve(
     tempo_info = np.column_stack((score_time, tempo_curve))
 
     return tempo_info
+
+
+def plot_tempo_curves(
+    piece: str,
+    v4x22_dataset_dir: PathLike,
+) -> None:
+    """
+    Plot a comparison of tempo curves of pieces in the Vienna 4x22
+    dataset
+
+    Parameters
+    ----------
+    piece : str
+        name of the piece in the dataset.
+    v4x22_dataset_dir : PathLike
+        Path to the dataset
+    """
+
+    v4x22_pieces = (
+        "Mozart_K331_1st-mov",
+        "Schubert_D783_no15",
+        "Chopin_op38",
+        "Chopin_op10_no3",
+    )
+    if piece not in v4x22_pieces:
+        raise ValueError(f"The piece should be in {v4x22_pieces}")
+
+    MUSICXML_DIR = os.path.join(v4x22_dataset_dir, "musicxml")
+    MATCH_DIR = os.path.join(v4x22_dataset_dir, "match")
+
+    matchfiles = glob.glob(os.path.join(MATCH_DIR, f"{piece}_p*.match"))
+    matchfiles.sort()
+
+    # Load the score
+    score_fn = os.path.join(MUSICXML_DIR, f"{piece}.musicxml")
+    score = pt.load_score(score_fn)
+    snote_array = score.note_array()
+
+    tempo_curves = []
+    for i, matchfile in enumerate(matchfiles):
+        # load alignment
+        perf, alignment = pt.load_match(matchfile)
+        # Compute tempo curves
+        tempo_curve = compute_tempo_curve(
+            perf=perf,
+            score=snote_array,
+            alignment=alignment,
+        )
+        tempo_curves.append(tempo_curve)
+
+    fig, ax = plt.subplots(1, figsize=(15, 8))
+    color = plt.cm.rainbow(np.linspace(0, 1, len(tempo_curves)))
+    for i, tempo_info in enumerate(tempo_curves):
+        score_time = tempo_info[:, 0]
+        tempo_curve = tempo_info[:, 1]
+        ax.plot(
+            score_time,
+            tempo_curve,
+            label=f"pianist {i + 1:02d}",
+            alpha=0.4,
+            c=color[i],
+        )
+
+    # plot average performance
+    ax.plot(
+        score_time,
+        np.mean([tc[:, 1] for tc in tempo_curves], axis=0),
+        label="average",
+        c="black",
+        linewidth=2,
+    )
+
+    # get starting time of each measure in the score
+    measure_times = score[0].beat_map(
+        [measure.start.t for measure in score[0].iter_all(pt.score.Measure)]
+    )
+    # do not include pickup measure
+    measure_times = measure_times[measure_times >= 0]
+    ax.set_title(piece)
+    ax.set_xlabel("Score time (beats)")
+    ax.set_ylabel("Tempo (bpm)")
+    ax.set_xticks(measure_times)
+    plt.legend(frameon=False, bbox_to_anchor=(1.15, 0.9))
+    plt.grid(axis="x")
+    plt.show()
