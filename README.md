@@ -2,6 +2,8 @@
 
 This repository contains an very short introduction to symbolic music alignment using dynamic time warping.
 
+The tutorial is based on the lecture on music alignment for the [Musical Informatics](https://www.jku.at/en/institut-fuer-computational-perception/lehre/alle-lehrveranstaltungen/special-topics-musical-informatics/) course offered at JKU (see [repository for the Winter semester 2023](https://github.com/MusicalInformatics/miws23)).
+
 ## Setup
 
 The code can be setup locally using the provided conda environment:
